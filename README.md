@@ -60,6 +60,13 @@ npm install
 npm run dev
 ```
 
+To preview the exact production build without a platform-specific runtime:
+
+```bash
+npm run build
+npm run preview
+```
+
 The demo runs without configuration. For the live Nexus flow, register the deployed redirect URL in Audiotool Developer Hub and create `.env.local`:
 
 ```bash
@@ -86,6 +93,18 @@ The current automated checks verify server rendering, the explicit/non-destructi
 4. Play all three Tonematrix strategies directly in the browser.
 5. Connect Audiotool, scan a live project, and forge one variation.
 6. Return to Audiotool and show the newly named device, pattern, and cable beside untouched existing music.
+
+The timed narration and shot list are in [`DEMO_SCRIPT.md`](./DEMO_SCRIPT.md).
+
+## Screenshots
+
+![Loopbreaker hero showing the eight-bar loop problem](./public/screenshots/loopbreaker-hero.png)
+
+![Loopbreaker session scan with project-derived composition signals](./public/screenshots/loopbreaker-session-scan.png)
+
+![Loopbreaker adaptive mission for escaping an eight-bar loop](./public/screenshots/loopbreaker-missions.png)
+
+![Loopbreaker deterministic Tonematrix variation grid](./public/screenshots/loopbreaker-variation-forge.png)
 
 ## Design choices and limits
 
