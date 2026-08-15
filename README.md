@@ -1,5 +1,7 @@
 # Loopbreaker Quest
 
+[![Verify](https://github.com/ceodaradigu/loopbreaker-quest/actions/workflows/verify.yml/badge.svg)](https://github.com/ceodaradigu/loopbreaker-quest/actions/workflows/verify.yml)
+
 > Your loop is not the song.
 
 Loopbreaker is a live composition coach for Audiotool. It reads a project through Nexus, detects where musical momentum is stalling, and turns the next move into a focused mission. When the artist wants a concrete starting point, it can add a new Tonematrix variation without changing or deleting existing music.
