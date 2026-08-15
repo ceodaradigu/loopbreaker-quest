@@ -20,7 +20,7 @@ Loopbreaker closes that gap:
 
 ## What works
 
-- Interactive demo with a complete example session; no account or paid API required.
+- Interactive demo with a complete example session and audible Web Audio previews; no account or paid API required.
 - Audiotool browser OAuth using the minimal `project:write` scope.
 - Live project picker and Nexus document synchronization.
 - Deterministic analysis of notes, note regions, patterns, instruments, effects, duration, tempo, pitch classes, and velocity spread.
@@ -81,7 +81,7 @@ The current automated checks verify server rendering, the explicit/non-destructi
 1. Open the demo and introduce the eight-bar-loop problem.
 2. Show the session scan and explain the momentum score.
 3. Switch among the four missions and show how their wording responds to project evidence.
-4. Preview all three Tonematrix strategies.
+4. Play all three Tonematrix strategies directly in the browser.
 5. Connect Audiotool, scan a live project, and forge one variation.
 6. Return to Audiotool and show the newly named device, pattern, and cable beside untouched existing music.
 

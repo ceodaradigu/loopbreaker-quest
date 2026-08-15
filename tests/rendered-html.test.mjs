@@ -45,4 +45,6 @@ test("ships deterministic strategy data for all three variation paths", async ()
   }
   assert.match(source, /function calculateMomentum/);
   assert.match(source, /function buildMissions/);
+  assert.match(source, /new AudioContext\(\)/);
+  assert.match(source, /PLAY AUDIO PREVIEW/);
 });

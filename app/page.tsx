@@ -240,6 +240,44 @@ function calculateMomentum(snapshot: SessionSnapshot) {
   return Math.max(12, Math.round(arrangement + pitch + layers + development + dynamics));
 }
 
+const PREVIEW_PITCHES = [84, 81, 79, 76, 74, 72, 69, 67, 64, 62, 60, 57, 55, 52, 50, 48];
+
+async function playDemoVariation(variation: Variation, bpm: number) {
+  const audioContext = new AudioContext();
+  const master = audioContext.createGain();
+  const stepSeconds = 60 / bpm / 4;
+  const startAt = audioContext.currentTime + 0.04;
+  const finishAt = startAt + stepSeconds * 16 + 0.18;
+
+  master.gain.setValueAtTime(0.14, startAt);
+  master.gain.exponentialRampToValueAtTime(0.0001, finishAt);
+  master.connect(audioContext.destination);
+
+  variation.cells.forEach((rows, step) => {
+    rows.forEach((row) => {
+      const midi = PREVIEW_PITCHES[row] ?? 60;
+      const frequency = 440 * 2 ** ((midi - 69) / 12);
+      const noteStart = startAt + step * stepSeconds;
+      const oscillator = audioContext.createOscillator();
+      const envelope = audioContext.createGain();
+
+      oscillator.type = step % 4 === 0 ? "triangle" : "sine";
+      oscillator.frequency.setValueAtTime(frequency, noteStart);
+      envelope.gain.setValueAtTime(0.0001, noteStart);
+      envelope.gain.exponentialRampToValueAtTime(0.72, noteStart + 0.012);
+      envelope.gain.exponentialRampToValueAtTime(0.0001, noteStart + stepSeconds * 0.82);
+      oscillator.connect(envelope);
+      envelope.connect(master);
+      oscillator.start(noteStart);
+      oscillator.stop(noteStart + stepSeconds * 0.84);
+    });
+  });
+
+  await audioContext.resume();
+  await new Promise((resolve) => window.setTimeout(resolve, (finishAt - audioContext.currentTime) * 1000));
+  await audioContext.close();
+}
+
 function MiniGrid({ variation }: { variation: Variation }) {
   return (
     <div className="mini-grid" aria-label={`16-step preview for ${variation.name}`}>
@@ -361,7 +399,16 @@ export default function Home() {
 
   const forgeVariation = async () => {
     if (!documentRef.current || mode !== "live") {
-      setNotice("Preview ready. Connect a live project to forge this variation into Audiotool.");
+      setStatus("writing");
+      setNotice(`Playing “${variation.name}” at ${snapshot.bpm} BPM…`);
+      try {
+        await playDemoVariation(variation, snapshot.bpm);
+        setNotice(`Preview played. Connect Audiotool to forge “${variation.name}” into a live project.`);
+      } catch (error) {
+        setNotice(`Audio preview failed safely: ${formatError(error)}`);
+      } finally {
+        setStatus("idle");
+      }
       return;
     }
 
@@ -608,7 +655,7 @@ export default function Home() {
             ))}
           </div>
           <button className="forge-button" disabled={status !== "idle"} onClick={forgeVariation} type="button">
-            {status === "writing" ? "FORGING…" : mode === "live" ? "FORGE INTO AUDIOTOOL" : "PREVIEW IN DEMO MODE"}
+            {status === "writing" ? "PLAYING…" : mode === "live" ? "FORGE INTO AUDIOTOOL" : "PLAY AUDIO PREVIEW"}
             <span aria-hidden="true">↗</span>
           </button>
         </div>
