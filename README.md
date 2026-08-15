@@ -6,7 +6,7 @@
 
 Loopbreaker is a live composition coach for Audiotool. It reads a project through Nexus, detects where musical momentum is stalling, and turns the next move into a focused mission. When the artist wants a concrete starting point, it can add a new Tonematrix variation without changing or deleting existing music.
 
-Built for **Audiotool Let’s Build! 2026**. Primary categories: **Music Games**, **Composition**, and **Songstarter**.
+Built for **Audiotool Let’s Build! 2026**. Primary category: **Composition**. Secondary category: **Music Games**.
 
 ## The problem
 
@@ -28,7 +28,7 @@ Loopbreaker closes that gap:
 - Deterministic analysis of notes, note regions, patterns, instruments, effects, duration, tempo, pitch classes, and velocity spread.
 - Four adaptive mission families: arrangement, motif, sonic role, and pulse.
 - Three deterministic 16-step Tonematrix strategies: call-and-response, register lift, and negative space.
-- Explicit, non-destructive write: creates a named Tonematrix, its pattern, and a mixer cable only after the user clicks.
+- Explicit, non-destructive write: creates a named Tonematrix and pattern only after the user clicks, then connects it to a free mixer input. If no free input exists, it creates one empty mixer channel before adding the cable.
 - Responsive, keyboard-accessible product surface with reduced-motion support.
 
 ## Nexus integration
@@ -46,7 +46,7 @@ queryEntities(notes, regions, patterns, devices, config)
       ↓
 deterministic score + four missions
       ↓ explicit user action
-document.modify() → Tonematrix + pattern + mixer cable
+document.modify() → Tonematrix + pattern + free mixer input + cable
 ```
 
 The live write is intentionally additive. The code contains no entity deletion path, does not mutate the artist’s existing devices, and does not send project contents to a third-party model.
@@ -67,13 +67,22 @@ npm run build
 npm run preview
 ```
 
-The demo runs without configuration. For the live Nexus flow, register the deployed redirect URL in Audiotool Developer Hub and create `.env.local`:
+The demo runs without configuration. For the live Nexus flow, register the deployed redirect URL and `http://127.0.0.1:4173/` in Audiotool Developer Hub, then create `.env.local`:
 
 ```bash
 NEXT_PUBLIC_AUDIOTOOL_CLIENT_ID=your_public_client_id
 ```
 
 The client ID is an OAuth public identifier, not a secret. Never add access tokens or credentials to the repository.
+
+For local OAuth, build after setting the client ID and use the registered preview origin exactly:
+
+```bash
+npm run build
+npm run preview
+```
+
+Open `http://127.0.0.1:4173/`. The ordinary development server may choose a different port and is intended for the account-free demo unless its exact redirect is registered first.
 
 ## Verification
 
@@ -92,7 +101,7 @@ The current automated checks verify server rendering, the explicit/non-destructi
 3. Switch among the four missions and show how their wording responds to project evidence.
 4. Play all three Tonematrix strategies directly in the browser.
 5. Connect Audiotool, scan a live project, and forge one variation.
-6. Return to Audiotool and show the newly named device, pattern, and cable beside untouched existing music.
+6. Return to Audiotool and show the newly named device, pattern, and connection beside untouched existing music.
 
 The timed narration and shot list are in [`DEMO_SCRIPT.md`](./DEMO_SCRIPT.md).
 
@@ -112,6 +121,10 @@ The timed narration and shot list are in [`DEMO_SCRIPT.md`](./DEMO_SCRIPT.md).
 - Generated notes use a fixed C-pentatonic map so the demo is reproducible. A future version can infer tonal center and remap the same strategies.
 - The live path depends on Audiotool Nexus availability and a valid client ID.
 - Loopbreaker gives constraints and starting material; authorship stays with the producer.
+
+## AI assistance disclosure
+
+OpenAI Codex assisted with implementation, code review, testing, and documentation. The deterministic analysis and variation logic run locally in the app; Loopbreaker sends no project content to an AI model or other third-party model service at runtime. The published claims, source, tests, and live integration evidence are reviewed before submission.
 
 ## Technology
 

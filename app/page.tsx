@@ -664,7 +664,7 @@ export default function Home() {
           <div className="forge-panel-top"><span>PATTERN 01</span><span>C PENTATONIC · 16 STEPS</span></div>
           <MiniGrid variation={variation} />
           <div className="variation-card"><small>{variation.eyebrow}</small><strong>{variation.name}</strong><p>{variation.summary}</p></div>
-          <div className="forge-safety"><span>✓</span><p><strong>NON-DESTRUCTIVE WRITE</strong><br />Adds a named device, pattern, and mixer cable. Existing music stays untouched.</p></div>
+          <div className="forge-safety"><span>✓</span><p><strong>NON-DESTRUCTIVE WRITE</strong><br />Adds a named device and pattern, then uses a free mixer input or creates one empty channel. Existing music stays untouched.</p></div>
         </div>
       </section>
 

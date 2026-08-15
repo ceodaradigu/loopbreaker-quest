@@ -52,15 +52,17 @@ until OAuth is configured and one real additive write has been verified.
 
 **Picture:** **Replace this placeholder after OAuth.** Connect Audiotool, choose
 a test project, run the scan, forge one variation, then show the named
-Tonematrix, pattern, and mixer cable in Audiotool beside untouched existing
-devices.
+Tonematrix, pattern, and connection in Audiotool beside untouched existing
+devices. If the project has no free mixer input, show the new empty mixer
+channel that Loopbreaker creates for that connection.
 
 **Narration:**
 
 > In the live path, OAuth requests only project write access. A scan opens the
 > selected document and reads its current entities. Nothing changes until I
-> press Forge. That one command adds a named Tonematrix, one pattern, and a mixer
-> cable. There is no delete path and existing devices are not mutated.
+> press Forge. That one command adds a named Tonematrix and pattern, then connects
+> them to a free mixer input. If none exists, it adds one empty mixer channel.
+> There is no delete path and existing devices are not mutated.
 
 ## 2:30–2:45 — Close
 

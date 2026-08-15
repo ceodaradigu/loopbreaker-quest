@@ -34,6 +34,8 @@ test("keeps the Nexus write explicit and non-destructive", async () => {
   assert.match(source, /transaction\.create\("tonematrix"/);
   assert.match(source, /transaction\.create\("tonematrixPattern"/);
   assert.match(source, /transaction\.create\("desktopAudioCable"/);
+  assert.match(source, /transaction\.create\("mixerChannel"/);
+  assert.match(source, /uses a free mixer input or creates one empty channel/);
   assert.match(source, /Existing music stays untouched\./);
   assert.doesNotMatch(source, /deleteEntity|removeEntity/i);
 });
